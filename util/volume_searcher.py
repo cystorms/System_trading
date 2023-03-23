@@ -19,7 +19,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-
+# 이제 푸시가 됩니다.
 dfs = {}
 for code in code_list:
     url = 'http://fchart.stock.naver.com/sise.nhn?symbol='+code+'&timeframe=day&count=500&requestType=0'
