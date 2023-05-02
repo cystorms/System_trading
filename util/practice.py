@@ -1,16 +1,23 @@
-import pandas as pd
-import requests
-from bs4 import BeautifulSoup
+import sqlite3
+import matplotlib.pyplot as plt
 
-url = 'http://fchart.stock.naver.com/sise.nhn?symbol=066570&timeframe=day&count=500&requestType=0'
-response = requests.get(url)
-html=BeautifulSoup(response.text,"html")
-item_list=html.find_all('item')
+# 데이터베이스 연결
+conn = sqlite3.connect('C:/Users/min17/Desktop/과제/2-1학기/경원2 데이터.db')
+cur = conn.cursor()
 
-data_list=[]
-for item in item_list:
-    data=item['data'].split('|')
-    data_list.append(data)
-    column_list=['날짜','시가','고가','저가','종가','거래량']
-    day_price_df=pd.DataFrame(data_list, columns=column_list)
-    print(day_price_df)
+# 데이터 가져오기
+cur.execute('SELECT volume, interest, date FROM economy2')
+data = cur.fetchall()
+
+# 그래프 그리기
+x = [d[0] for d in data]
+y = [d[1] for d in data]
+dates = [d[2] for d in data]
+
+plt.scatter(x, y)
+plt.xlabel('Volume')
+plt.ylabel('Interest')
+plt.title('Supply and Demand Graph')
+
+# 그래프를 png 파일로 저장
+plt.savefig('graph.png')

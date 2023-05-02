@@ -1,14 +1,18 @@
 import pandas as pd
 import FinanceDataReader as fdr
 
+start_date='2015-01-01'
+end_date='2023-04-29'
+
 # 나스닥 지수 데이터 가져오기
-nasdaq = fdr.DataReader('IXIC', '2020-01-01', '2023-04-29')
+
+nasdaq = fdr.DataReader('IXIC', start_date, end_date)
 
 # 코스닥 종합 지수 데이터 가져오기
-kosdaq = fdr.DataReader('KS11', '2020-01-01', '2023-04-29')
+kosdaq = fdr.DataReader('KS11', start_date, end_date)
 
 # 나스닥 하락 다음 날 코스닥 시가로 매수, 10일 후/20일 후 종가로 매도
-trade_dates = nasdaq[(nasdaq['Close'].pct_change() < -0.02)].index
+trade_dates = nasdaq[(nasdaq['Close'].pct_change() > 0.02)].index
 results = []
 for date in trade_dates:
     if date.weekday() not in [0, 1, 2, 3]:
@@ -36,3 +40,7 @@ for date in trade_dates:
 # 결과 출력
 results_df = pd.DataFrame(results, columns=['Date', 'Profit(7d)', 'Profit(14d)'])
 print(results_df)
+mean_profit7d=results_df['Profit(7d)'].mean()
+mean_profit14d=results_df['Profit(14d)'].mean()
+print('Mean Profit(7d): {:.2f}%'.format(mean_profit7d))
+print('Mean Profit(14d): {:.2f}%'.format(mean_profit14d))

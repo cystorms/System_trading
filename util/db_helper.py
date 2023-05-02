@@ -148,7 +148,7 @@ code_list_end=[]
 name_list_end=[]
 price_list_end=[]
 for i in range(59):
-    if int(volume[i])*int(price[i])>2000000000:
+    if int(volume[i])*int(price[i])>3000000000:
         code_list_end.append(code[i])
         name_list_end.append(name[i])
         price_list_end.append(price[i])
