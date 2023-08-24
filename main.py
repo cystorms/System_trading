@@ -1,8 +1,11 @@
-from util.Daum_Crawling import *
+from 전환사채.C_strategy import *
 import sys
 
+app=QApplication(sys.argv)
 
-make_up=Daum_Crawling()
-make_up.start
 
-app.exec_()
+c_strategy=C_strategy()
+c_strategy.start()
+
+
+app.exec_

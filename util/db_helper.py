@@ -5,12 +5,24 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from datetime import date
 import time
+from selenium import webdriver
 import sqlite3
 import requests
 from bs4 import BeautifulSoup
 
+# ChromeDriver 경로를 수동으로 설정합니다.
+chrome_driver_path = 'C:/Users/min17/Desktop/증권 백테스팅/chromedriver-win32/chromedriver.exe'
 
-chrome_options=Options()
+# ChromeDriver 옵션을 설정합니다.
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')  # 화면 없는 실행을 원할 경우 주석 해제
+chrome_options.add_argument("window-size=1920x1080")
+
+# ChromeDriver를 실행합니다.
+driver = webdriver.Chrome(executable_path=chrome_driver_path, options=chrome_options)
+
+
+'''chrome_options=Options()
 chrome_options.add_experimental_option("detach", True)
 
 chrome_options.add_experimental_option("excludeSwitches",["enable-logging"])
@@ -22,7 +34,7 @@ def set_chrome_driver():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     return driver
 
-chrome_options.add_argument('headless')
+chrome_options.add_argument('--headless')'''
 
 driver.implicitly_wait(1)
 KosPi_Url='https://finance.daum.net/domestic/after_hours?market=KOSPI'

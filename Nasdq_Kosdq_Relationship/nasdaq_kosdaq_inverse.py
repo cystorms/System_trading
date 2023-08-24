@@ -1,7 +1,8 @@
 import pandas as pd
 import FinanceDataReader as fdr
+import matplotlib.pyplot as plt
 
-start_date='2022-04-29'
+start_date='2010-04-29'
 end_date='2023-04-29'
 
 # 나스닥 지수 데이터 가져오기
@@ -26,8 +27,10 @@ for date in trade_dates:
         kosdaq_data = kosdaq.loc[str(date + pd.Timedelta(days=1))]
     except KeyError:  # KeyError 예외 처리
         continue  # 데이터가 없으면 건너뜀
+
     if kosdaq_data.empty:
         continue  # 데이터가 없으면 건너뜀
+
     buy_price = kosdaq_data['Open']
     sell_price = kosdaq_data['Close']
     profit = (sell_price - buy_price) / buy_price * 100
@@ -41,6 +44,11 @@ for date in trade_dates:
 # 결과 출력
 
 result = pd.DataFrame({'Date': traded_dates, 'Profit(%)': profit_list})
-print(result)
+
+for i in profit_list:
+    print(i)
 mean_profit = result['Profit(%)'].mean()
 print('Mean Profit: {:.2f}%'.format(mean_profit))
+
+plt.plot(profit_list)
+plt.show()

@@ -1,7 +1,7 @@
 import pandas as pd
 import FinanceDataReader as fdr
 
-start_date='2022-04-29'
+start_date='2010-04-29'
 end_date='2023-04-29'
 
 # 나스닥 지수 데이터 가져오기
